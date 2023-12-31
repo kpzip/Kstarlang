@@ -12,7 +12,7 @@ endif()
 project ("Kcompiler")
 
 # Add source to this project's executable.
-add_executable (Kcompiler "Kcompiler.cpp" "Kcompiler.h")
+add_executable (Kcompiler "Kcompiler.cpp" "Kcompiler.h" "data/AST.cpp")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET Kcompiler PROPERTY CXX_STANDARD 20)

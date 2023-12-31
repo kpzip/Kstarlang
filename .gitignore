@@ -1,4 +1,5 @@
 #Compiler
 Kcompiler/.vs/
 Kcompiler/out/
-
+Kjavac/.gradle
+Kjavac/build
