@@ -11,19 +11,7 @@ public class Lexer {
 	
 	public static final String[] KEYWORDS = {"void", "public", "int"};
 	
-	public static final Pattern KEYWORD = Pattern.compile("\\G(int|float|char|public|void)");
 	public static final Pattern WHITESPACE = Pattern.compile("\\G\\s+");
-	public static final Pattern IDENTIFIER = Pattern.compile("\\G[a-zA-Z_$][a-zA-Z_$0-9]*");
-	public static final Pattern ENDSTATEMENT = Pattern.compile("\\G;");
-	public static final Pattern OPERATOR = Pattern.compile("\\G=");
-	public static final Pattern DECLITERAL = Pattern.compile("\\G[0-9]*\\.[0-9]+");
-	public static final Pattern INTLITERAL = Pattern.compile("\\G[0-9]+");
-	public static final Pattern STRLITERAL = Pattern.compile("\\G\"([^\"\\\\]|\\\\.)*\"");
-	public static final Pattern CHARLITERAL = Pattern.compile("\\G'.'");
-	public static final Pattern DOT = Pattern.compile("\\G\\.");
-	public static final Pattern SCOPEBEGIN = Pattern.compile("\\G\\{");
-	public static final Pattern SCOPEEND = Pattern.compile("\\G\\}");
-	
 
 	private Lexer() {}
 	
@@ -38,17 +26,17 @@ public class Lexer {
 			}
 			
 			//Order Matters!
-			if (checkForAndAppendToken(programScanner, KEYWORD, tokens, Token.Type.KEYWORD)) continue;
-			if (checkForAndAppendToken(programScanner, IDENTIFIER, tokens, Token.Type.IDENTIFIER)) continue;
-			if (checkForAndAppendToken(programScanner, ENDSTATEMENT, tokens, Token.Type.ENDSTATEMENT)) continue;
-			if (checkForAndAppendToken(programScanner, OPERATOR, tokens, Token.Type.OPERATOR)) continue;
-			if (checkForAndAppendToken(programScanner, DECLITERAL, tokens, Token.Type.DECLITERAL)) continue;
-			if (checkForAndAppendToken(programScanner, INTLITERAL, tokens, Token.Type.INTLITERAL)) continue;
-			if (checkForAndAppendToken(programScanner, STRLITERAL, tokens, Token.Type.STRLITERAL)) continue;
-			if (checkForAndAppendToken(programScanner, CHARLITERAL, tokens, Token.Type.CHARLITERAL)) continue;
-			if (checkForAndAppendToken(programScanner, DOT, tokens, Token.Type.DOT)) continue;
-			if (checkForAndAppendToken(programScanner, SCOPEBEGIN, tokens, Token.Type.SCOPEBEGIN)) continue;
-			if (checkForAndAppendToken(programScanner, SCOPEEND, tokens, Token.Type.SCOPEEND)) continue;
+			if (checkForAndAppendToken(programScanner, tokens, TokenType.KEYWORD)) continue;
+			if (checkForAndAppendToken(programScanner, tokens, TokenType.IDENTIFIER)) continue;
+			if (checkForAndAppendToken(programScanner, tokens, TokenType.ENDSTATEMENT)) continue;
+			if (checkForAndAppendToken(programScanner, tokens, TokenType.OPERATOR)) continue;
+			if (checkForAndAppendToken(programScanner, tokens, TokenType.DECLITERAL)) continue;
+			if (checkForAndAppendToken(programScanner, tokens, TokenType.INTLITERAL)) continue;
+			if (checkForAndAppendToken(programScanner, tokens, TokenType.STRLITERAL)) continue;
+			if (checkForAndAppendToken(programScanner, tokens, TokenType.CHARLITERAL)) continue;
+			if (checkForAndAppendToken(programScanner, tokens, TokenType.DOT)) continue;
+			if (checkForAndAppendToken(programScanner, tokens, TokenType.SCOPEBEGIN)) continue;
+			if (checkForAndAppendToken(programScanner, tokens, TokenType.SCOPEEND)) continue;
 			throw new IllegalStateException("failed to match any token!");
 		}
 		
@@ -56,14 +44,43 @@ public class Lexer {
 		
 	}
 	
-	private static boolean checkForAndAppendToken(Scanner scan, Pattern match, List<Token> tokens, Token.Type type) {
+	private static boolean checkForAndAppendToken(Scanner scan, List<Token> tokens, TokenType type) {
 		//Optimise with ternary operator
 		String str;
-		if ((str = scan.findWithinHorizon(match, 0)) != null) {
+		if ((str = scan.findWithinHorizon(type.getPattern(), 0)) != null) {
 			tokens.add(new Token(type, str));
 			return true;
 		}
 		return false;
+	}
+	
+	public enum TokenType {
+		
+		IDENTIFIER("\\G[a-zA-Z_$][a-zA-Z_$0-9]*"),
+		KEYWORD("\\G(int|float|char|public|void)"),
+		OPERATOR("\\G="),
+		ENDSTATEMENT("\\G;"),
+		STRLITERAL("\\G\"([^\"\\\\]|\\\\.)*\""),
+		CHARLITERAL("\\G'.'"),
+		INTLITERAL("\\G[0-9]+"),
+		DECLITERAL("\\G[0-9]*\\.[0-9]+"),
+		DOT("\\G\\."),
+		SCOPEBEGIN("\\G\\{"),
+		SCOPEEND("\\G\\}"),
+		EXPRBEGIN("\\G\\("),
+		EXPREND("\\G\\)");
+		
+		private final Pattern matcher;
+		
+		private TokenType(String regex) {
+			matcher = Pattern.compile(regex);
+		}
+		
+		public Pattern getPattern() {
+			return matcher;
+		}
+		
+		
 	}
 
 }

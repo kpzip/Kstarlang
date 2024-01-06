@@ -1,17 +1,19 @@
 package kjavac.syntax;
 
+import kjavac.components.Lexer.TokenType;
+
 public class Token {
 	
-	private Type t;
+	private TokenType t;
 	
 	private String value;
 
-	public Token(Type t, String value) {
+	public Token(TokenType t, String value) {
 		this.t = t;
 		this.value = value;
 	}
 	
-	public Type getType() {
+	public TokenType getType() {
 		return t;
 	}
 	
@@ -23,23 +25,6 @@ public class Token {
 	@Override
 	public String toString() {
 		return "Token [t=" + t.name() + ", value=" + value + "]";
-	}
-
-
-	public enum Type {
-		IDENTIFIER,
-		KEYWORD,
-		OPERATOR,
-		ENDSTATEMENT,
-		STRLITERAL,
-		CHARLITERAL,
-		INTLITERAL,
-		DECLITERAL,
-		DOT,
-		SCOPEBEGIN,
-		SCOPEEND,
-		EXPRBEGIN,
-		EXPREND
 	}
 
 }
