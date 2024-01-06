@@ -1,0 +1,9 @@
+{ 
+	"integer declaration": { 
+		"value": "int i = 0;",
+		"token1": { 
+			"type": "INTLITERAL",
+			"value": "int"
+		}
+	}
+}
