@@ -1,11 +1,22 @@
 package kjavac.syntax.statements;
 
-import kjavac.syntax.SyntaxTree.SyntaxTreeNode;
+import java.util.List;
 
-public abstract class Statement implements SyntaxTreeNode {
+import kjavac.syntax.Token;
+
+public abstract class Statement {
 
 	public Statement() {
 		
+	}
+	
+	public static Statement create(List<Token> tokens) {
+		if (tokens.size() == 0) {
+			return new NullStatement();
+		}
+		
+		//TODO Match variable declaration
+		return null;
 	}
 
 }

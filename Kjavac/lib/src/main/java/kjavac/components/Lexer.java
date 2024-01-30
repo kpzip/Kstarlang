@@ -37,7 +37,9 @@ public class Lexer {
 			if (checkForAndAppendToken(programScanner, tokens, TokenType.DOT)) continue;
 			if (checkForAndAppendToken(programScanner, tokens, TokenType.SCOPEBEGIN)) continue;
 			if (checkForAndAppendToken(programScanner, tokens, TokenType.SCOPEEND)) continue;
-			throw new IllegalStateException("failed to match any token!");
+			if (checkForAndAppendToken(programScanner, tokens, TokenType.EXPRBEGIN)) continue;
+			if (checkForAndAppendToken(programScanner, tokens, TokenType.EXPREND)) continue;
+			throw new IllegalStateException("failed to match any token! -> " + programScanner.next());
 		}
 		
 		return tokens;

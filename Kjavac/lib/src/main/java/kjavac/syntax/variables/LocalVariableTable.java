@@ -1,8 +1,11 @@
 package kjavac.syntax.variables;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.TreeSet;
+
+import kjavac.syntax.type.Type;
 
 public class LocalVariableTable implements Iterable<LocalVariableTable.Variable> {
 
@@ -25,12 +28,21 @@ public class LocalVariableTable implements Iterable<LocalVariableTable.Variable>
 		return lvt.contains(name);
 	}
 	
-	public void add(String name, int size) {
-		int offset = lvt.last().offset + size;
-		lvt.add(new Variable(name, size, offset));
+	public void add(String name, Type type) {
+		int offset = lvt.isEmpty() ? 0 : lvt.last().offset + type.sizeof();
+		lvt.add(new Variable(name, type, offset));
 	}
 	
-	public final record Variable(String name, int size, int offset) implements Comparable<Variable> {
+	public int size() {
+		try {
+			Variable last = lvt.last();
+			return last.offset + last.sizeof();
+		} catch (NoSuchElementException n) {
+			return 0;
+		}
+	}
+	
+	public final record Variable(String name, Type type, int offset) implements Comparable<Variable> {
 
 		@Override
 		public int hashCode() {
@@ -54,6 +66,10 @@ public class LocalVariableTable implements Iterable<LocalVariableTable.Variable>
 		@Override
 		public int compareTo(Variable o) {
 			return this.offset - o.offset;
+		}
+		
+		public int sizeof(){
+			return type.sizeof();
 		}
 
 	}
