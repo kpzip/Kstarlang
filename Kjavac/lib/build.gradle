@@ -28,6 +28,19 @@ dependencies {
     antlr 'org.antlr:antlr4:4.13.2'
 }
 
+// Antlr
+generateGrammarSource {
+    maxHeapSize = "64m"
+    arguments += [ "-visitor", 
+                   "-long-messages",
+                   "-package", "kjavac.generated" ]
+    outputDirectory = file("${buildDir}/generated-src/antlr/main/kjavac/generated")
+}
+
+clean {
+    delete file("${buildDir}/generated-src/antlr/main/kjavac/generated")
+}
+
 // Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
