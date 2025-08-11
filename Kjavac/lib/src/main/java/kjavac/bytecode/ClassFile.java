@@ -42,13 +42,7 @@ public class ClassFile {
 		
 		
 		
-		short this_class_num = cp.addClassRef(this.this_class);
-		short super_class_num = cp.addClassRef(this.super_class);
 		
-		short[] interfaces_num = new short[interfaces.length];
-		for (int i = 0; i < interfaces.length; i++) {
-			interfaces_num[i] = cp.addClassRef(interfaces[i]);
-		}
 		
 		
 	}

@@ -6,6 +6,7 @@ package kjavac.ast;
 import java.util.List;
 
 import kjavac.ast.statement.declaration.Declaration;
+import kjavac.bytecode.ClassFile;
 
 /**
  * 
@@ -29,7 +30,7 @@ public class ParsedFile {
 	}
 	
 	public ClassFile emitClassFile() {
-		
+		return null;
 	}
 
 }
