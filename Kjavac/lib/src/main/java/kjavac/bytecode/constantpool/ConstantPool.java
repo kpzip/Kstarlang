@@ -16,7 +16,7 @@ import kjavac.ast.type.DefinedType;
 public class ConstantPool {
 
 	private ArrayList<String> strings;
-	private ArrayList<DefinedType> class_references;
+	private ArrayList<ClassReference> class_references;
 	private ArrayList<FieldReference> field_reference;
 	private ArrayList<MethodReference> method_references;
 	private ArrayList<MethodReference> interface_method_references;
@@ -38,7 +38,7 @@ public class ConstantPool {
 	 */
 	public ConstantPool() {
 		this.strings = new ArrayList<String>();
-		this.class_references = new ArrayList<DefinedType>();
+		this.class_references = new ArrayList<ClassReference>();
 		this.field_reference = new ArrayList<FieldReference>();
 		this.method_references = new ArrayList<MethodReference>();
 		this.interface_method_references = new ArrayList<MethodReference>();
@@ -56,7 +56,20 @@ public class ConstantPool {
 	}
 	
 	public void addClassRef(DefinedType t) {
-		this.class_references.add(t);
+		this.class_references.add(new ClassReference(t, this.strings.size()));
+		this.strings.add(t.qualifiedName());
+	}
+	
+	public int getClassRefIndex(DefinedType t) {
+		return this.class_references.indexOf(new ClassReference(t, 0)) + strings.size();
+	}
+	
+	public void addString(String s) {
+		this.strings.add(s);
+	}
+	
+	public int getStringIndex(String s) {
+		return this.strings.indexOf(s);
 	}
 
 }

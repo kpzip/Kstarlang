@@ -7,6 +7,8 @@ import java.io.File;
 
 import kjavac.ast.type.DefinedType;
 import kjavac.bytecode.constantpool.ConstantPool;
+import kjavac.bytecode.field.FieldInfo;
+import kjavac.bytecode.method.MethodInfo;
 
 /**
  * 
@@ -26,8 +28,8 @@ public class ClassFile {
 	private DefinedType super_class;
 	private DefinedType[] interfaces;
 	
-	private short[] fields;
-	private short[] methods;
+	private FieldInfo[] fields;
+	private MethodInfo[] methods;
 	private short[] attributes;
 
 	/**
@@ -40,7 +42,15 @@ public class ClassFile {
 	public void write(File f) {
 		ConstantPool cp = new ConstantPool();
 		
+		cp.addClassRef(this.this_class);
+		cp.addClassRef(this.super_class);
+		for (DefinedType i : this.interfaces) {
+			cp.addClassRef(i);
+		}
 		
+		for (MethodInfo m : this.methods) {
+			m.addConstantPoolEntries(cp);
+		}
 		
 		
 		

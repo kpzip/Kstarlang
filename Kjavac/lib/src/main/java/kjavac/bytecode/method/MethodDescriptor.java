@@ -9,12 +9,18 @@ package kjavac.bytecode.method;
  * 
  */
 public class MethodDescriptor {
+	
+	private String descriptor;
 
 	/**
 	 * 
 	 */
-	public MethodDescriptor() {
-		// TODO Auto-generated constructor stub
+	public MethodDescriptor(String descriptor) {
+		this.descriptor = descriptor;
+	}
+	
+	public String getDescriptor() {
+		return this.descriptor;
 	}
 
 }

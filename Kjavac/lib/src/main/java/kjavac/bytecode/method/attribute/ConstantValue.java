@@ -3,7 +3,6 @@
  */
 package kjavac.bytecode.method.attribute;
 
-import kjavac.bytecode.code.Instruction;
 import kjavac.bytecode.constantpool.ConstantPool;
 
 /**
@@ -11,22 +10,21 @@ import kjavac.bytecode.constantpool.ConstantPool;
  * @author kpzip
  * 
  */
-public class MethodCode implements MethodAttribute {
-	
-	private int max_stack;
-	private int max_locals;
-	private Instruction[] instructions;
+public class ConstantValue implements MethodAttribute {
 
 	/**
 	 * 
 	 */
-	public MethodCode() {
+	public ConstantValue() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
 	public void addConstantPoolEntries(ConstantPool cp) {
-		// TODO Auto-generated method stub	
+		// TODO Auto-generated method stub
+		
 	}
+	
+	
 
 }

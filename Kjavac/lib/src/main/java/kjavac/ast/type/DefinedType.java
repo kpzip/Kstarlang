@@ -20,5 +20,9 @@ public class DefinedType implements Type {
 	public DefinedType(Identifier name) {
 		this.name = name;
 	}
+	
+	public String qualifiedName() {
+		return "";
+	}
 
 }

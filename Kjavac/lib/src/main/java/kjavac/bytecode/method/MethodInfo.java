@@ -5,6 +5,7 @@ package kjavac.bytecode.method;
 
 import kjavac.ast.Identifier;
 import kjavac.bytecode.AccessFlags;
+import kjavac.bytecode.constantpool.ConstantPool;
 import kjavac.bytecode.method.attribute.MethodAttribute;
 
 /**
@@ -24,6 +25,14 @@ public class MethodInfo {
 	 */
 	public MethodInfo() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public void addConstantPoolEntries(ConstantPool cp) {
+		cp.addString(name.getName());
+		cp.addString(descriptor.getDescriptor());
+		for (MethodAttribute ma : this.attributes) {
+			ma.addConstantPoolEntries(cp);
+		}
 	}
 
 }
